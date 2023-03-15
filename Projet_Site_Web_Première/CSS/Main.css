@@ -1,0 +1,62 @@
+:root {
+    --current-theme: "day";
+    --main-theme: rgb(180, 177, 177);
+    --secondary-theme: rgb(138, 137, 137);
+    --font-color : rgb(0,0,0);
+    margin:1%;
+    overflow-x: hidden;
+}
+body{
+    background-color: var(--main-theme);
+    color: var(--font-color);
+}
+.Block {
+    background-color: var(--secondary-theme);
+    position: absolute;
+    left:0%;
+    right:0%;
+    top:0%;
+}
+
+.Night_Day{
+    height: 50px;;
+    width:50px;
+    position: relative;
+    left:1%;
+}
+
+/*TODO Bouton Menu */
+.Menu_button{
+    height:50px;
+    width:50px;
+    left:1%;
+    position: relative;
+    animation: menu_out .5s forwards;
+}
+
+.Menu_button:hover{
+    animation: menu_in 0.5s forwards;
+}
+
+@keyframes menu_in {
+    from   { transform: rotate(0deg); }
+    to { transform: rotate(90deg);}
+}
+
+@keyframes menu_out {
+    0%   { transform: rotate(90deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.Main_Title{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 200px;
+    top: 40;
+    position: relative;
+    text-align: center;
+}
+
+.First_Text{
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: larger;
+}

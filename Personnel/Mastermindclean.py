@@ -29,6 +29,7 @@ class Game:  # Main loop
         self.todraw = 1  # Dessine les scènes pré enregistrés
         # On crée la fenêtre
         pyx.init(self.tailleecranx, self.tailleecrany, title="Mastermind")
+        pyx.mouse(visible=True)
         # On lance le jeu
         pyx.run(self.update, self.draw)
 
@@ -67,6 +68,8 @@ class Game:  # Main loop
 
     def draw(self):
         if self.todraw == 1:
+            # On dessine un fond noir
+            pyx.rect(0, 0, x, y, 0)
             # On affiche le Titre
             pyuni.text(x/4, y/10, 'MasterMind', 8)
             # Boutton play

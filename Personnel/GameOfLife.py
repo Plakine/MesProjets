@@ -15,7 +15,6 @@ class Game:
         spawnpercent: int -> chance qu'un carré soit vivant au démarrage
         """
         self.SquareSize = int(x/gridsize)
-        print(self.SquareSize)
         self.gs = gridsize
         self.sp = spawnpercent
         self.grid = [[1 if randint(0, 100) <= self.sp else 0

@@ -7,26 +7,35 @@ import pyxel as px
 
 class Game:
     """
-    Le squelette du jeu tout ce passe ici !
+    Le squelette du jeu : tout ce passe ici !
     """
 
-    def __init__(self, x: int = 800, fps: int = 5,
-                 gridsize: int = 20, spawnpercent: int = 75):
+    def __init__(self,  x: int = 800, fps: int = 5,
+                 gridsize: int = 20, spawnpercent: int = 75,
+                 randomspawn: int = 1):
         """
         Démarre le jeu avec les paramètres suivant :
         X : int -> taille de l'écran (hauteur et largeur)
         speed : int -> image par seconde
         gridsize : int -> quantité de carrés en une longeur ou hauteur
         spawnpercent: int -> chance qu'un carré soit vivant au démarrage
+        randomspawn: int -> L'utilisateur veut-il un tableau aléatoire 
+                            ou le créer lui meme
         """
         # On définit les variables
+        self.israndom = randomspawn
         self.SquareSize = int(x/gridsize)
         self.gs = gridsize
         self.sp = spawnpercent
         # On crée la fenêtre
         px.init(x, x, "Game Of Life", fps)
-        # On crée le tableau aléatoire et on l'affiche
-        self.reset()
+        if self.israndom == 1:
+            # On crée le tableau aléatoire et on l'affiche
+            self.reset()
+            self.gamestarted = True
+        else:
+            self.reset()
+            self.gamestarted = False
         # On lance le jeu
         px.run(self.update, self.draw)
 
@@ -47,9 +56,38 @@ class Game:
         """
         Calculate the next frame
         """
+        if not self.gamestarted:
+            px.mouse(True)
+            self.tokill = []
+            self.tolife = []
+            if px.btn(px.KEY_E):
+                self.gamestarted = True
+                px.mouse(False)
+                self.startinggrid = self.grid
+            if px.btn(px.MOUSE_BUTTON_LEFT):
+                x = px.mouse_x
+                y = px.mouse_y
+                col = x//self.SquareSize
+                line = y//self.SquareSize
+                if self.grid[col][line] == 1:
+                    self.grid[col][line] = 0
+                elif self.grid[col][line] == 0:
+                    self.grid[col][line] = 1
+                self.todraw = [[], []]
+            px.cls(7)
+            for i in range((self.gs)):
+                for j in range((self.gs)):
+                    if self.grid[i][j] == 0:
+                        self.todraw[0].append((i, j))
+                    elif self.grid[i][j] == 1:
+                        self.todraw[1].append((i, j))
+
+            return 0
         if px.btn(px.KEY_CTRL):
             self.reset()
-
+        if px.btn(px.KEY_D):
+            self.gamestarted = False
+            return 0
         self.Calcul()
 
         self.Actualisation()
@@ -103,9 +141,15 @@ class Game:
         """
         On initialise un tableau et on l'affiche
         """
-        # Tableau aléatoire
-        self.grid = [[1 if randint(0, 100) < self.sp else 0
-                      for i in range(self.gs)] for i in range(self.gs)]
+        if self.israndom == 1:
+            # Tableau aléatoire
+            self.grid = [[1 if randint(0, 100) < self.sp else 0
+                        for i in range(self.gs)] for i in range(self.gs)]
+        else:
+            try:
+                self.grid = self.startinggrid
+            except:
+                self.grid = [[0 for i in range(self.gs)] for l in range(self.gs)]
         # On ajoute tout à dessiner
         self.todraw = [[], []]
         for i in range((self.gs)):
@@ -118,4 +162,5 @@ class Game:
         self.draw()
 
 
-Game(800, 5, 80, 75)
+
+Game(800, 5, 80, 75, 0)

@@ -19,7 +19,7 @@ class Game:
         speed : int -> image par seconde
         gridsize : int -> quantité de carrés en une longeur ou hauteur
         spawnpercent: int -> chance qu'un carré soit vivant au démarrage
-        randomspawn: int -> L'utilisateur veut-il un tableau aléatoire 
+        randomspawn: int -> L'utilisateur veut-il un tableau aléatoire
                             ou le créer lui meme
         """
         # On définit les variables
@@ -134,7 +134,7 @@ class Game:
                     elif col == len(self.grid):
                         Somme += self.grid[0][line]
                     elif line == len(self.grid):
-                        Somme += self.grid[col][0]                        
+                        Somme += self.grid[col][0]
         return Somme
 
     def reset(self):
@@ -144,12 +144,13 @@ class Game:
         if self.israndom == 1:
             # Tableau aléatoire
             self.grid = [[1 if randint(0, 100) < self.sp else 0
-                        for i in range(self.gs)] for i in range(self.gs)]
+                         for i in range(self.gs)] for i in range(self.gs)]
         else:
             try:
                 self.grid = self.startinggrid
-            except:
-                self.grid = [[0 for i in range(self.gs)] for l in range(self.gs)]
+            except AttributeError:
+                self.grid = [[0 for i in range(self.gs)]
+                             for j in range(self.gs)]
         # On ajoute tout à dessiner
         self.todraw = [[], []]
         for i in range((self.gs)):
@@ -160,7 +161,6 @@ class Game:
                     self.todraw[1].append((i, j))
         # On actualise l'affichage
         self.draw()
-
 
 
 Game(800, 5, 80, 75, 0)

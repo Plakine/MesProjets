@@ -59,41 +59,44 @@ class Game:
         if px.btn(px.KEY_CTRL):
             self.reset()
         if not self.gamestarted:
-            px.mouse(True)
-            self.tokill = []
-            self.tolife = []
-            if px.btn(px.KEY_E):
-                self.gamestarted = True
-                px.mouse(False)
-                self.startinggrid = self.grid
-            if px.btn(px.MOUSE_BUTTON_LEFT):
-                x = px.mouse_x
-                y = px.mouse_y
-                col = x//self.SquareSize
-                line = y//self.SquareSize
-                if self.grid[col][line] == 1:
-                    self.grid[col][line] = 0
-                elif self.grid[col][line] == 0:
-                    self.grid[col][line] = 1
-                self.todraw = [[], []]
-            px.cls(7)
-            for i in range((self.gs)):
-                for j in range((self.gs)):
-                    if self.grid[i][j] == 0:
-                        self.todraw[0].append((i, j))
-                    elif self.grid[i][j] == 1:
-                        self.todraw[1].append((i, j))
-
+            self.Canva()
             return 0
         if px.btn(px.KEY_D):
             self.gamestarted = False
             return 0
+
         self.Calcul()
 
         self.Actualisation()
 
         # On ajoute les modifications à dessiner
         self.todraw = [self.tokill, self.tolife]
+
+    def Canva(self):
+        px.mouse(True)
+        self.tokill = []
+        self.tolife = []
+        if px.btn(px.KEY_E):
+            self.gamestarted = True
+            px.mouse(False)
+            self.startinggrid = self.grid
+        if px.btn(px.MOUSE_BUTTON_LEFT):
+            x = px.mouse_x
+            y = px.mouse_y
+            col = x//self.SquareSize
+            line = y//self.SquareSize
+            if self.grid[col][line] == 1:
+                self.grid[col][line] = 0
+            elif self.grid[col][line] == 0:
+                self.grid[col][line] = 1
+            self.todraw = [[], []]
+        px.cls(7)
+        for i in range((self.gs)):
+            for j in range((self.gs)):
+                if self.grid[i][j] == 0:
+                    self.todraw[0].append((i, j))
+                elif self.grid[i][j] == 1:
+                    self.todraw[1].append((i, j))
 
     def Calcul(self):
         """

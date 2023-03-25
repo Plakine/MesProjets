@@ -56,6 +56,8 @@ class Game:
         """
         Calculate the next frame
         """
+        if px.btn(px.KEY_CTRL):
+            self.reset()
         if not self.gamestarted:
             px.mouse(True)
             self.tokill = []
@@ -83,8 +85,6 @@ class Game:
                         self.todraw[1].append((i, j))
 
             return 0
-        if px.btn(px.KEY_CTRL):
-            self.reset()
         if px.btn(px.KEY_D):
             self.gamestarted = False
             return 0

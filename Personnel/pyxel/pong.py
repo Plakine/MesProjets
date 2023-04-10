@@ -21,18 +21,19 @@ class Game():
             self.num = number
             self.width = 20
             self.height = 60
-            
+
         def move(self, balls):
             closestBall = 0
             closestdistance = 900
             for i in range(len(balls)):
                 distance = ((self.x-balls[i].x)/balls[i].speed[0])
-                if distance < closestdistance and distance > 0 and distance < 180:
+                if distance < closestdistance and distance > 0\
+                        and distance < 180:
                     closestdistance = distance
                     closestBall = i
             closestBall = balls[closestBall]
             if closestBall.speed[0] < 0 and self.num == 2\
-                or closestBall.speed[0] > 0 and self.num == 1:
+                    or closestBall.speed[0] > 0 and self.num == 1:
                 if self.y < 160:
                     self.y += 10
                 elif self.y > 170:
@@ -50,7 +51,7 @@ class Game():
                         curr_y += closestBall.speed[1]
                 else:
                     if curr_y - closestBall.speed[1] > 400\
-                        or curr_y - closestBall.speed[1] < 0:
+                         or curr_y - closestBall.speed[1] < 0:
                         changed = 0
                     else:
                         curr_y += -closestBall.speed[1]
@@ -62,7 +63,6 @@ class Game():
                     - (closestBall.y + (delta_y)) > 19:
                 if self.y + 5 > 0:
                     self.y -= 10
-
 
     class Player():
 
@@ -88,6 +88,7 @@ class Game():
                     self.y -= 10
                 elif px.btn(px.KEY_DOWN) and (self.y+self.height) < 400:
                     self.y += 10
+
     class Ball():
         def __init__(self, x, y, speed):
             self.x = x
@@ -96,18 +97,18 @@ class Game():
 
         def move(self, player_y, bot_y):
             if self.y + self.speed[1] > 400\
-                or self.y + self.speed[1] < 0:
+                 or self.y + self.speed[1] < 0:
                 self.Bounce(0)
-            if (self.x <= 41 and self.x >= 20) :
+            if (self.x <= 41 and self.x >= 20):
                 if self.y-player_y <= 60 and self.y-player_y >= 0:
                     self.Bounce(1)
-                    while (self.x <= 40 ) or (self.x >= 780):
+                    while (self.x <= 40) or (self.x >= 780):
                         self.x += self.speed[0]*2
                         self.y += self.speed[1]*2
             if self.y <= 800 and (self.x >= 781):
                 if self.y-bot_y <= 60 and self.y-bot_y >= 0:
                     self.Bounce(1)
-                    while (self.x <= 40 ) or (self.x >= 780):
+                    while (self.x <= 40) or (self.x >= 780):
                         self.x += self.speed[0]*2
                         self.y += self.speed[1]*2
             self.x += self.speed[0]*2
@@ -124,13 +125,13 @@ class Game():
             elif entity == 1:
                 self.speed = (-self.speed[0], self.speed[1])
 
-    def __init__(self, playercount = 1):
+    def __init__(self, playercount=1):
         self.screen_width = 800
         self.screen_height = 400
         self.plcount = playercount
         if playercount == 0:
             self.bot = self.Bot(2)
-            self.player = self.Bot(1) 
+            self.player = self.Bot(1)
         elif playercount == 1:
             self.bot = self.Bot(2)
             self.player = self.Player(1)
@@ -170,6 +171,7 @@ class Game():
                 self.bot = self.Player(2)
             self.NewBall()
             self.texte = str(self.player.score) + " | " + str(self.bot.score)
+
     def draw(self):
         px.cls(0)
         px.rectb(0, 0, 800, 400, 7)
@@ -185,7 +187,7 @@ class Game():
         else:
             px.blt(self.bot.x, self.bot.y,
                    0, 0, 0, 20, 60)
-            
+
         for ball in self.Balls:
             px.circ(ball.x, ball.y, 8, 7)
         px.text(400, 1, self.texte, 15)
@@ -213,11 +215,11 @@ class Game():
                     self.bot.score += 1
                 elif ball.x > 800:
                     self.player.score += 1
-                self.texte = str(self.player.score) + " | " + str(self.bot.score)
-                if len(self.Balls) == 1: 
+                self.texte = (str(self.player.score) + " | " +
+                              str(self.bot.score))
+                if len(self.Balls) == 1:
                     self.NewBall()
                 self.Balls.remove(ball)
-                    
 
 
 Game(1)

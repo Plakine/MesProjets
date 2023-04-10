@@ -27,6 +27,7 @@ class Game:
         self.SquareSize = int(x/gridsize)
         self.gs = gridsize
         self.sp = spawnpercent
+        self.hasdrawn = 0
         # On crée la fenêtre
         px.init(x, x, "Game Of Life", fps)
         if self.israndom == 1:
@@ -43,26 +44,32 @@ class Game:
         """
         Draw the changes
         """
-        # Dessine les morts
-        for (i, j) in self.todraw[0]:
-            px.rect(i*self.SquareSize, j*self.SquareSize, self.SquareSize,
-                    self.SquareSize, 7)
-        # Dessine les vivants
-        for (i, j) in self.todraw[1]:
-            px.rect(i*self.SquareSize, j*self.SquareSize, self.SquareSize,
-                    self.SquareSize, 0)
+        if self.hasdrawn == 0:
+            # Dessine les morts
+            for (i, j) in self.todraw[0]:
+                px.rect(i*self.SquareSize, j*self.SquareSize, self.SquareSize,
+                        self.SquareSize, 7)
+            # Dessine les vivants
+            for (i, j) in self.todraw[1]:
+                px.rect(i*self.SquareSize, j*self.SquareSize, self.SquareSize,
+                        self.SquareSize, 0)
+            self.hasdrawn = 1
 
     def update(self):
         """
         Calculate the next frame
         """
+        if self.hasdrawn == 0:
+            return -1
         if px.btn(px.KEY_CTRL):
             self.reset()
         if not self.gamestarted:
             self.Canva()
+            self.hasdrawn = 0
             return 0
         if px.btn(px.KEY_D):
             self.gamestarted = False
+            self.hasdrawn = 0
             return 0
 
         self.Calcul()
@@ -71,6 +78,7 @@ class Game:
 
         # On ajoute les modifications à dessiner
         self.todraw = [self.tokill, self.tolife]
+        self.hasdrawn = 0
 
     def Canva(self):
         px.mouse(True)
@@ -80,7 +88,7 @@ class Game:
             self.gamestarted = True
             px.mouse(False)
             self.startinggrid = self.grid
-        if px.btn(px.MOUSE_BUTTON_LEFT):
+        if px.btnp(px.MOUSE_BUTTON_LEFT):
             x = px.mouse_x
             y = px.mouse_y
             col = x//self.SquareSize
@@ -166,4 +174,4 @@ class Game:
         self.draw()
 
 
-Game(800, 5, 80, 75, 0)
+Game(1080, 144, 40, 75, 0)

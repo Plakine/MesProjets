@@ -7,6 +7,7 @@ from pygame import *
 from pygame import event as ev
 from random import randint
 
+
 def start():
     global info, screen_width, screen_height, game, window, csr, x, y,cl,col,col1,col2,col3,col4,colist,coldict,chosenlist,trynum,a,b,c,d
 
@@ -60,7 +61,6 @@ def start():
     csr = 1 # variable qui sauvegarde sur quel écran est le joueur (1 = écran d'acceuil)
 
 
-
 def screen(menu):
     global info, window, screen_width, screen_height, game, pos2
 
@@ -81,7 +81,6 @@ def screen(menu):
         window.blit(game, (0, 0))
         display.flip()
         pos2 = text.get_rect()
-        
 
 
 def launch():
@@ -161,7 +160,8 @@ def launch():
     display.flip()
     csr=2
 
-#Reset the Color selector
+
+# Reset the Color selector
 def clearout():
     global chosenlist
     #Turns it black
@@ -175,6 +175,7 @@ def clearout():
     draw.circle(game,"white",(screen_width/6+500/5*3,screen_height/10*8.7+50),30,width=1)
     draw.circle(game,"white",(screen_width/6+500/5*4,screen_height/10*8.7+50),30,width=1)
     chosenlist = ["None","None","None","None"]
+
 
 def checking():
     global trynum
@@ -235,30 +236,25 @@ def checking():
         return 0
     else:
         return 1
-        
-
-
-
-
-
 
 
 start()
-screen(1) #1 - > afficher le menu de titre
+screen(1)  # 1 - > afficher le menu de titre
 
 # action à effectuer tout le temps
 while 1:
 
-    #Event listener (detecte lorsque qu'on clique sur quelque chose (clavier, souris...))
+    # Event listener (detecte lorsque qu'on clique sur quelque chose
+    # (clavier, souris...))
     for event in ev.get():
 
-            #si un touche à été pressé
+            # si un touche à été pressé
             if event.type == KEYDOWN :
-                #si c'est escape on quitte le jeu
+                # si c'est escape on quitte le jeu
                 if (event.key == K_ESCAPE):
                     display.quit()
                     quit()
-                #On choisis la couleur à l'aide du clavier
+                # On choisis la couleur à l'aide du clavier
                 if event.key == K_1:
                     col = coldict.get(1)
                 elif event.key == K_2:

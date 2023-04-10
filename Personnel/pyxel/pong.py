@@ -14,8 +14,10 @@ class Game():
         def __init__(self, number) -> None:
             if number == 2:
                 self.x = 780
+                self.maxx = 800
             elif number == 1:
                 self.x = 20
+                self.maxx = 20
             self.y = 200
             self.score = 0
             self.num = number
@@ -26,9 +28,8 @@ class Game():
             closestBall = 0
             closestdistance = 900
             for i in range(len(balls)):
-                distance = ((self.x-balls[i].x)/balls[i].speed[0])
-                if distance < closestdistance and distance > 0\
-                        and distance < 180:
+                distance = ((self.maxx-balls[i].x)/balls[i].speed[0])
+                if distance < closestdistance and distance > 0:
                     closestdistance = distance
                     closestBall = i
             closestBall = balls[closestBall]
@@ -222,4 +223,4 @@ class Game():
                 self.Balls.remove(ball)
 
 
-Game(1)
+Game(0)

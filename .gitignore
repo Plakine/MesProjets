@@ -1,2 +1,5 @@
 SDL2
 *.exe
+*.json
+*.dll
+*.h

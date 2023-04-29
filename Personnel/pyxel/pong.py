@@ -21,12 +21,12 @@ class Game():
             number -> int (1||2):
                 - joueur 1 ou 2
             """
-            if number == 2: # Droite de l'écran
+            if number == 2:  # Droite de l'écran
                 # Coin haut gauche du dessin
                 self.x = 780
                 # Position de la raquette utilisé pour calculer la trajectoire
                 self.maxx = 800
-            elif number == 1: # Gauche de l'écran
+            elif number == 1:  # Gauche de l'écran
                 # Coin haut gauche du dessin
                 self.x = 20
                 # Position de la raquette utilisé pour calculer la trajectoire
@@ -56,7 +56,8 @@ class Game():
             # Calcule la coordonée y de la balle à son arrivée au robot
             curr_y = self.get_bally(closestBall, closestdistance)
 
-            # Si le robot ne peut pas l'avoir il refait les calculs avec la suivante
+            # Si le robot ne peut pas l'avoir il refait les calculs
+            # avec la balle suivante
             while ((curr_y-(self.y+30))//10) > closestdistance:
                 balls = [i for i in balls if i != closestBall]
                 # Si aucune n'est accessible il se replace au milieu
@@ -73,8 +74,10 @@ class Game():
             # le robot décide dans quel sens bouger
             # Vers le bas
             if curr_y > self.y+30\
-                    and curr_y - self.y+30 > 19: # Empeche le robot d'osciller autour de sa position initiale
-                if self.y+60 + 5 < 400: # Verifie que le robot ne sorte pas de l'écran
+                    and curr_y - self.y+30 > 19:
+                # Empeche le robot d'osciller autour de sa position initiale
+                if self.y+60 + 5 < 400:
+                    # Verifie que le robot ne sorte pas de l'écran
                     self.y += 10
             # Vers le haut
             elif curr_y < self.y+30 and self.y+30\
@@ -82,7 +85,7 @@ class Game():
                 if self.y + 5 > 0:
                     self.y -= 10
 
-        def get_closestball(self, balls:list):
+        def get_closestball(self, balls: list):
             """
             Cherche la balle dans balls la plus proche du robot
             """
@@ -90,24 +93,27 @@ class Game():
             closestBall = 0
             closestdistance = 900
             for i in range(len(balls)):
-                # Calcule la durée en images pour que la balle arrive 
+                # Calcule la durée en images pour que la balle arrive
                 # Distance de la raquette (pixel) / vitesse (pixel/frame)
                 distance = ((self.maxx-balls[i].x)/balls[i].speed[0])
                 if distance < closestdistance\
-                      and distance > 0: # Changer cette condition par distance < x permet de limiter la vue des robots aux balles arrivants dans moins de x images
+                   and distance > 0:
+                    # Changer cette condition par distance < x
+                    # permet de limiter la vue des robots
+                    # aux balles arrivants dans moins de x images
                     closestdistance = distance
                     closestBall = i
             return closestBall, closestdistance
-    
-        def get_bally(self, closestBall, closestdistance:int) -> int:
+
+        def get_bally(self, closestBall, closestdistance: int) -> int:
             """
             Calcul la coordonée y ou le robot devra se placer
             closestBall : Ball -> la balle la plus proche
             closestdistance : int -> sa distance avec le joueur (en images)
             """
-            curr_y = closestBall.y # Coordonée y de la balle
-            changed = 0 # La balle a-t-elle rebondi sur le mur 
-                        # (0 -> vitesse y initiale, 1 -> vitesse y inversée)
+            curr_y = closestBall.y  # Coordonée y de la balle
+            changed = 0  # La balle a-t-elle rebondi sur le mur
+            # (0 -> vitesse y initiale, 1 -> vitesse y inversée)
             for i in range(int(closestdistance)+1):
                 if changed == 0:
                     if curr_y + closestBall.speed[1] < 0\
@@ -124,10 +130,10 @@ class Game():
             return curr_y
 
     class Player():
-        
+
         def __init__(self, playernum):
             if playernum == 1:
-                self.x = 20 # Position du joueur sur l'écran en x
+                self.x = 20  # Position du joueur sur l'écran en x
             elif playernum == 2:
                 self.x = 780
             self.num = playernum
@@ -161,14 +167,14 @@ class Game():
 
         def move(self, player_y, bot_y):
             """
-            Mouvements et colisions de la balle (sauf entre balles) 
+            Mouvements et colisions de la balle (sauf entre balles)
             """
             # Colision avecle mur
             if self.y + self.speed[1] > 400\
-                 or self.y + self.speed[1] < 0:
+                    or self.y + self.speed[1] < 0:
                 self.Bounce(0)
                 while self.y + self.speed[1] > 400\
-                 or self.y + self.speed[1] < 0:
+                        or self.y + self.speed[1] < 0:
                     self.x += self.speed[0]*2
                     self.y += self.speed[1]*2
 
@@ -230,8 +236,8 @@ class Game():
         """
         Calcule les changements
         """
-        #* Mouvement des raquettes
-        # Passe en argument la liste de balles si l'objet est un robot 
+        # * Mouvement des raquettes
+        # Passe en argument la liste de balles si l'objet est un robot
         if self.plcount != 0:
             self.player.move()
         else:
@@ -242,14 +248,14 @@ class Game():
         else:
             self.bot.move()
 
-        #* Mouvement des balles
+        # * Mouvement des balles
         self.MoveBall()
 
         # Nouvelle balle toutes les 10s (à 60 ips)
         if px.frame_count % 600 == 0 and px.frame_count != 0:
             self.NewBall()
-        
-        #* reset du jeu
+
+        # * reset du jeu
         if px.btnp(px.KEY_SPACE):
             self.Balls = []
             if self.plcount == 0:
@@ -269,22 +275,22 @@ class Game():
         Dessine les changements
         """
         px.cls(0)
-        px.rectb(0, 0, 800, 400, 7) # Bordure du terrain
-        
-        #* Affichage des raquettes
+        px.rectb(0, 0, 800, 400, 7)  # Bordure du terrain
+
+        # * Affichage des raquettes
 
         # A gauche
-        if type(self.player) == self.Player: # Cas 1 : joueur
+        if type(self.player) == self.Player:  # Cas 1 : joueur
             px.blt(self.player.x, self.player.y,
                    1, 30, 0, 21, 60)
-        else: # Cas 2 robot
+        else:  # Cas 2 robot
             px.blt(self.player.x, self.player.y,
                    0, 30, 0, 21, 60)
         # A droite
-        if type(self.bot) == self.Player: # Cas joueur
+        if type(self.bot) == self.Player:  # Cas joueur
             px.blt(self.bot.x, self.bot.y,
                    1, 0, 0, 20, 60)
-        else: # Cas robot
+        else:  # Cas robot
             px.blt(self.bot.x, self.bot.y,
                    0, 0, 0, 20, 60)
 
@@ -293,21 +299,21 @@ class Game():
         px.text(400, 1, self.texte, 15)
 
     def NewBall(self):
-        """ 
+        """
         Crée une nouvelle balle
         """
         x = 0
         y = 0
         while x == 0:
             if self.plcount != 0:
-                x = randint(-3, 3) # Au moins 1 joueur
+                x = randint(-3, 3)  # Au moins 1 joueur
             else:
-                x = randint(-5, 5) # 0 joueurs (balles peuvent etre + rapide)
+                x = randint(-5, 5)  # 0 joueurs (balles peuvent etre + rapide)
         while y == 0:
             if self.plcount != 0:
-                y = randint(-3, 3) # Au moins 1 joueur
+                y = randint(-3, 3)  # Au moins 1 joueur
             else:
-                y = randint(-5, 5) # 0 joueurs (balles peuvent etre + rapide)
+                y = randint(-5, 5)  # 0 joueurs (balles peuvent etre + rapide)
         self.Balls.append(self.Ball(400, 200, (x, y)))
 
     def MoveBall(self):
@@ -319,22 +325,24 @@ class Game():
             ballcoos = [(ball.x, ball.y) for ball in self.Balls]
             for val in ballcoos:
                 if (ball.x-4 <= val[0]+4 and val[0]-4 <= ball.x+4)\
-                and (ball.y-4 <= val[1]+4 and val[1]-4 <= ball.y+4)\
-                and (ball.x != val[0] or ball.y != val[1]):
-                    # Colision 
+                    and (ball.y-4 <= val[1]+4 and val[1]-4 <= ball.y+4)\
+                        and (ball.x != val[0] or ball.y != val[1]):
+                    # Colision
                     if (ball.x-4 <= val[0]+4 and val[0]-4 <= ball.x+4)\
-                and (ball.y-4 <= val[1]+4 and val[1]-4 <= ball.y+4):
+                            and (ball.y-4 <= val[1]+4 and
+                                 val[1]-4 <= ball.y+4):
                         ball.speed = [-ball.speed[0], -ball.speed[1]]
                     elif (ball.x-4 <= val[0]+4 and val[0]-4 <= ball.x+4):
                         ball.speed = [-ball.speed[0], ball.speed[1]]
                     elif (ball.y-4 <= val[1]+4 and val[1]-4 <= ball.y+4):
                         ball.speed = [ball.speed[0], -ball.speed[1]]
                 elif (ball.x+4 <= val[0]-4 and val[0]+4 <= ball.x-4)\
-                and (ball.y+4 <= val[1]-4 and val[1]+4 <= ball.y-4)\
-                and (ball.x != val[0] or ball.y != val[1]):
-                    # Colision 
+                        and (ball.y+4 <= val[1]-4 and val[1]+4 <= ball.y-4)\
+                        and (ball.x != val[0] or ball.y != val[1]):
+                    # Colision
                     if (ball.x+4 <= val[0]-4 and val[0]+4 <= ball.x-4)\
-                and (ball.y+4 <= val[1]-4 and val[1]+4 <= ball.y-4):
+                            and (ball.y+4 <= val[1]-4 and
+                                 val[1]+4 <= ball.y-4):
                         ball.speed = [-ball.speed[0], -ball.speed[1]]
                     elif (ball.x+4 <= val[0]-4 and val[0]+4 <= ball.x-4):
                         ball.speed = [-ball.speed[0], ball.speed[1]]
@@ -350,9 +358,9 @@ class Game():
                 elif ball.x > 800:
                     self.player.score += 1
                 self.texte = (str(self.player.score) + " | " +
-                              str(self.bot.score)) # Change le score affiché
+                              str(self.bot.score))  # Change le score affiché
                 if len(self.Balls) == 1:
-                    self.NewBall() # Maintient au moins une balle
+                    self.NewBall()  # Maintient au moins une balle
                 self.Balls.remove(ball)
 
 

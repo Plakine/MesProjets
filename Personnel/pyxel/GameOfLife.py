@@ -3,9 +3,11 @@ Game of life
 """
 from random import randint
 import pyxel as px
-# Le blanc devient du vrai blanc
 
+# Le blanc devient du vrai blanc
 px.colors[7] = 0xFFFFFF
+
+
 class Game:
     """
     Le squelette du jeu : tout ce passe ici !
@@ -45,7 +47,7 @@ class Game:
         """
         Draw the changes
         """
-        if self.hasdrawn==0:
+        if self.hasdrawn == 0:
             # Dessine les nouveaux morts
             for (i, j) in self.todraw[0]:
                 px.rect(i*self.SquareSize, j*self.SquareSize, self.SquareSize,
@@ -65,7 +67,7 @@ class Game:
             return 0
         # Mode dessin
         if not self.gamestarted:
-            px.mouse(True) # Affichage sours
+            px.mouse(True)  # Affichage sours
             self.tokill = []
             self.tolife = []
             # Lancement de la simulation
@@ -105,7 +107,7 @@ class Game:
         if px.btn(px.KEY_D):
             self.gamestarted = False
             return 0
-        
+
         self.Calcul()
 
         self.Actualisation()
@@ -131,7 +133,8 @@ class Game:
     def Actualisation(self):
         """
         Modifie le tableau pour prendre en compte la prochaine frame
-        necesserairement post calcul pour eviter que le tableau change au fur et a mesure des calculs"""
+        necesserairement post calcul pour eviter que le tableau change au fur
+        et a mesure des calculs"""
         for (c, l) in self.tokill:
             self.grid[c][l] = 0
         for (c, l) in self.tolife:
@@ -147,12 +150,13 @@ class Game:
                 try:
                     if not (ligne == i and colonne == j):
                         Somme += self.grid[ligne][colonne]
-                except IndexError: # Si la case passe par un bord
-                    if ligne == len(self.grid) and colonne == len(self.grid): # Bas droite
+                except IndexError:  # Si la case passe par un bord
+                    if ligne == len(self.grid) and colonne == len(self.grid):
+                        # Bas droite
                         Somme += self.grid[0][0]
-                    elif ligne == len(self.grid): # bas
+                    elif ligne == len(self.grid):  # bas
                         Somme += self.grid[0][colonne]
-                    elif colonne == len(self.grid): # droite
+                    elif colonne == len(self.grid):  # droite
                         Somme += self.grid[ligne][0]
         return Somme
 
@@ -163,12 +167,13 @@ class Game:
         if self.israndom == 1:
             # Tableau aléatoire
             self.grid = [[1 if randint(0, 100) < self.sp else 0
-                        for i in range(self.gs)] for i in range(self.gs)]
+                         for i in range(self.gs)] for j in range(self.gs)]
         else:
             try:
                 self.grid = self.startinggrid
-            except:
-                self.grid = [[0 for i in range(self.gs)] for l in range(self.gs)]
+            except IndexError:
+                self.grid = [[0 for i in range(self.gs)]
+                             for j in range(self.gs)]
         # On ajoute tout à dessiner
         self.todraw = [[], []]
         for i in range((self.gs)):

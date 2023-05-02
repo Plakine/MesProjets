@@ -171,7 +171,8 @@ class Game:
         else:
             try:
                 self.grid = self.startinggrid
-            except IndexError:
+                print(self.grid)
+            except AttributeError:
                 self.grid = [[0 for i in range(self.gs)]
                              for j in range(self.gs)]
         # On ajoute tout à dessiner
@@ -186,4 +187,4 @@ class Game:
         self.draw()
 
 
-Game(800, 10, 80, 25, 1)
+Game(800, 10, 80, 10,0)

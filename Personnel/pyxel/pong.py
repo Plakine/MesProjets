@@ -23,14 +23,14 @@ class Game():
             """
             if number == 2:  # Droite de l'écran
                 # Coin haut gauche du dessin
-                self.x = 780
+                self.x = 760
                 # Position de la raquette utilisé pour calculer la trajectoire
-                self.maxx = 800
+                self.maxx = 760
             elif number == 1:  # Gauche de l'écran
                 # Coin haut gauche du dessin
                 self.x = 20
                 # Position de la raquette utilisé pour calculer la trajectoire
-                self.maxx = 20
+                self.maxx = 40
             self.y = 200
             self.score = 0
             self.num = number
@@ -58,7 +58,7 @@ class Game():
 
             # Si le robot ne peut pas l'avoir il refait les calculs
             # avec la balle suivante
-            while ((curr_y-(self.y+30))//10) > closestdistance:
+            while abs((curr_y-(self.y+30))//10) > closestdistance:
                 balls = [i for i in balls if i != closestBall]
                 # Si aucune n'est accessible il se replace au milieu
                 if len(balls) == 0:
@@ -182,14 +182,14 @@ class Game():
             if (self.x <= 41 and self.x >= 20):
                 if self.y-player_y <= 60 and self.y-player_y >= 0:
                     self.Bounce(1)
-                    while (self.x <= 40) or (self.x >= 780):
+                    while (self.x <= 40) or (self.x >= 760):
                         self.x += self.speed[0]*2
                         self.y += self.speed[1]*2
             # Colision avec la raquette droite
-            if self.y <= 800 and (self.x >= 781):
+            if self.y <= 800 and (self.x >= 760):
                 if self.y-bot_y <= 60 and self.y-bot_y >= 0:
                     self.Bounce(1)
-                    while (self.x <= 40) or (self.x >= 780):
+                    while (self.x <= 40) or (self.x >= 760):
                         self.x += self.speed[0]*2
                         self.y += self.speed[1]*2
             # Mouvement classique

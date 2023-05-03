@@ -3,3 +3,5 @@ SDL2
 *.json
 *.dll
 *.h
+ndc
+ndc.pyxres

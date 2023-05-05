@@ -1,13 +1,7 @@
-from cmath import rect
-from dis import dis
-from email import message
-from os import sep
-import threading
 from pygame import display
 from pygame import *
 import pygame
-from threading import *
-from time import  sleep,time
+from time import time
 from random import randint
 
 class snake:

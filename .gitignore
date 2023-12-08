@@ -7,3 +7,4 @@ ndc
 ndc.pyxres
 vmodif
 Personnel/firewallblocker.py
+*.pyc

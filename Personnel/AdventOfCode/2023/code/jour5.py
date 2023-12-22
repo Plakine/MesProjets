@@ -83,4 +83,3 @@ def partie2():
 
 
 print("Jour 5: \n  Partie 1:", (partie1()), "\n  Partie 2:", (partie2()))
-()

@@ -56,15 +56,15 @@ def partie1(grille, walk_value):
 
 
 
-def partie2(data, distance):
+def partie2(data):
     fullsize_even = partie1(data, 132)
-    fullsize_odd = partie1(data, 131)
-    corners_even = fullsize_even-partie1(data, 66)
+    fullsize_odd = partie1(data, 133)
+    corners_even = fullsize_even-partie1(data, 64)
     corners_odd = fullsize_odd-partie1(data, 65)
-    n = (distance-65)//131
-    print(n)
-    if distance%2 == 1:
-        return ((n+1)**2)*fullsize_odd + (n**2)*fullsize_even - (n+1)*corners_odd+n*corners_even
+    n = 202300
+    return ((n+1)**2)*fullsize_odd + (n**2)*fullsize_even - (n+1)*corners_odd+n*corners_even
 
 print(partie1(data, 64))
-print(partie2(data, 26501365))
+print(partie2(data))
+
+

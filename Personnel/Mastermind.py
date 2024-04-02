@@ -1,6 +1,8 @@
 """
 Jeu du MasterMind.
-Jeudi 9 Juin 2022 à 10:26:38
+Il s'agit du tout premier jeu que j'ai réalisé
+c'est pour cela que le code ne suit pas les bonnes pratiques
+je n'ai pas reformaté le code, car je le garde en symbole de mon progrès en développement
 """
 
 from pygame import *
@@ -11,7 +13,7 @@ from random import randint
 def start():
     global info, screen_width, screen_height, game, window, csr, x, y,cl,col,col1,col2,col3,col4,colist,coldict,chosenlist,trynum,a,b,c,d
 
-    #réinitialisation de variables
+    # réinitialisation de variables
     cl = 1
     # Définition des couleurs à deviner de gauche à droite
     col1 = randint(1, 8)

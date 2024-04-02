@@ -9,3 +9,5 @@ vmodif
 Personnel/firewallblocker.py
 *.pyc
 j*.txt
+DATA
+scratch

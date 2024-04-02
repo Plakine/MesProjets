@@ -1,5 +1,5 @@
 """
-Shunting yard algorithm
+Algorithme de Shunting Yard
 """
 
 

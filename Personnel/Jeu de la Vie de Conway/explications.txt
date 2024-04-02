@@ -1,0 +1,2 @@
+Ces trois programmes se ressemblent beaucoup (la structure principale est la même). 
+Chacun diffèrent légèrement dans la manière de mettre à jour une case. Il s'agit de différents essais dans le but d'optimiser le programme

@@ -1,0 +1,10 @@
+Qu'est ce que l'Advent of Code ? 
+L'advent of code est un défi de programmation qui a lieu chaque mois de décembre depuis 2015. 
+Chaque jour (du 1er au 25) 2 problèmes sont publiés. Chaque utilisateur se voit attribué des données à utiliser pour résoudre le problème. 
+
+Vous trouverez dans ce dossier mes programmes pour les résoudre. 
+Néanmoins ces programmes nécéssitent chacun un jeu de données pour fonctionner.
+Vous ne trouverez pas de jeu de données ici car il a été demandé de ne pas les partager. 
+
+De plus un des objectifs de ce défi étant de programmer une réponse le plus vite possible. Les fichiers suivant ne suivent pas les bonnes pratiques en terme de commentaires.
+Merci de votre compréhension

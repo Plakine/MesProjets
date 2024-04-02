@@ -29,15 +29,6 @@ function change_theme(){
         root.style.setProperty("--font-color",'rgb(0,0,0)') //Noir
         night_button[0].src = "resources/Night_mode_v3.png";}}
 
-function BeAnnoying(){
-    var annoyingList = ["-50% sur les autocorrections de contrôles!","je lache NSI", "Comment se passe le divorce","l'abus d'alcool est dangereux pour le marriage", "Arthur, ou Perceval c'est mieux que Merlin",    "je suis à court d'idées", "Le saviez-vous : le logo est en Comic Sans MS","C'est pas très clair \"Quelques autres pages\" non?","Derrière vous","Je vous interdit de bloquer les alertes","C'est pas si mal le comic sans MS"]
-    if( Math.random() > 0.75){
-        change_theme()
-    }
-    alert(annoyingList[Math.floor(Math.random()*(annoyingList.length-1))])
-    setTimeout(BeAnnoying,90_000)
-}
-
 
 {//TODO Integrer les trucs la
 function dectobin(num1){
